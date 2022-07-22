@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Akkatecture.Example.RentAStream.Web.Data;
+using LinqToDB;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
 
@@ -12,21 +14,32 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly AppDataConnection _connection;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, AppDataConnection connection)
     {
         _logger = logger;
+        _connection = connection;
     }
 
     [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IEnumerable<WeatherForecast>> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        var accounts = await _connection.Account.ToArrayAsync();
+        return accounts.Select(index => new WeatherForecast
+             {
+                 Date = DateTime.Now.AddDays(index.Id),
+                 TemperatureC = Random.Shared.Next(-20, 55),
+                 Summary = index.Name 
+             })
+             .ToArray();       
+         
+         // return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+         //    {
+         //        Date = DateTime.Now.AddDays(index),
+         //        TemperatureC = Random.Shared.Next(-20, 55),
+         //        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+         //    })
+         //    .ToArray();
     }
 }

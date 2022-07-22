@@ -1,15 +1,24 @@
+using Akkatecture.Example.RentAStream.Web.Data;
+using Akkatecture.Example.RentAStream.Web.Models;
+using LinqToDB;
+using LinqToDB.AspNet;
+using LinqToDB.AspNet.Logging;
+using LinqToDB.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllersWithViews();
+builder.Services.AddLinqToDBContext<AppDataConnection>((provider, options) =>
+{
+    options.UsePostgreSQL(builder.Configuration.GetConnectionString("Default"))
+        .UseDefaultLogging(provider);
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -17,11 +26,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
+using (var scope = app.Services.CreateScope())
+{
+    var dataConnection = scope.ServiceProvider.GetService<AppDataConnection>()!;
+    // dataConnection.CreateTable<Account>();
+}
 
 app.Run();
