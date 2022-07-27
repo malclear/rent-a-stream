@@ -6,16 +6,18 @@
 // ---------------------------------------------------------------------------------------------------
 
 using LinqToDB.Mapping;
+using System;
 
 #pragma warning disable 1573, 1591
 #nullable enable
 
-namespace Akkatecture.Example.RentAStream.Web.Models
+namespace DataModel
 {
-	[Table("Account")]
-	public class Account
+	[Table("user")]
+	public class User
 	{
-		[Column("id"  , IsPrimaryKey = true , IsIdentity = true, SkipOnInsert = true, SkipOnUpdate = true)] public int    Id   { get; set; } // integer
-		[Column("name", CanBeNull    = false                                                             )] public string Name { get; set; } = null!; // character varying
+		[Column("id"       , IsPrimaryKey = true )] public Guid    Id       { get; set; } // uuid
+		[Column("username" , CanBeNull    = false)] public string  Username { get; set; } = null!; // character varying
+		[Column("total_due"                      )] public decimal TotalDue { get; set; } // money
 	}
 }

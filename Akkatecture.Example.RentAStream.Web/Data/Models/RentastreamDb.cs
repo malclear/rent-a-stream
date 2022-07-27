@@ -8,6 +8,7 @@
 using LinqToDB;
 using LinqToDB.Configuration;
 using LinqToDB.Data;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 #pragma warning disable 1573, 1591
 #nullable enable
 
-namespace Akkatecture.Example.RentAStream.Web.Models
+namespace DataModel
 {
 	public partial class RentastreamDb : DataConnection
 	{
@@ -38,18 +39,18 @@ namespace Akkatecture.Example.RentAStream.Web.Models
 
 		partial void InitDataContext();
 
-		public ITable<Account> Accounts => this.GetTable<Account>();
+		public ITable<User> Users => this.GetTable<User>();
 	}
 
 	public static partial class ExtensionMethods
 	{
 		#region Table Extensions
-		public static Account? Find(this ITable<Account> table, int id)
+		public static User? Find(this ITable<User> table, Guid id)
 		{
 			return table.FirstOrDefault(e => e.Id == id);
 		}
 
-		public static Task<Account?> FindAsync(this ITable<Account> table, int id, CancellationToken cancellationToken = default)
+		public static Task<User?> FindAsync(this ITable<User> table, Guid id, CancellationToken cancellationToken = default)
 		{
 			return table.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 		}

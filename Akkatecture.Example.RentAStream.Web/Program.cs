@@ -1,5 +1,5 @@
-using Akkatecture.Example.RentAStream.Web.Data;
 using Akkatecture.Example.RentAStream.Web.Models;
+using DataModel;
 using LinqToDB;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
@@ -8,7 +8,7 @@ using LinqToDB.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddLinqToDBContext<AppDataConnection>((provider, options) =>
+builder.Services.AddLinqToDBContext<RentastreamDb>((provider, options) =>
 {
     options.UsePostgreSQL(builder.Configuration.GetConnectionString("Default"))
         .UseDefaultLogging(provider);
@@ -33,7 +33,7 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");
 using (var scope = app.Services.CreateScope())
 {
-    var dataConnection = scope.ServiceProvider.GetService<AppDataConnection>()!;
+    var dataConnection = scope.ServiceProvider.GetService<RentastreamDb>()!;
     // dataConnection.CreateTable<Account>();
 }
 
