@@ -37,8 +37,7 @@ export class FetchData2 extends Component {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
       : FetchData2.renderUsersTable(this.state.user);
-
-      console.log(this.state);
+      
     return (
       <div>
         <h1 id="tabelLabel" >User list</h1>

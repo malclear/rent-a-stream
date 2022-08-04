@@ -9,12 +9,13 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres} # The PostgreSQL user (useful to connect to the database)
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgrespassword} # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: rentastream 
+#      POSTGRES_DB: rentastream 
     volumes:
-      - ./db-data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - data-volume:/var/lib/postgresql/data
+      - ./init_db:/docker-entrypoint-initdb.d
+    
 #    networks:
 #      - postgres
 volumes:
-  db-data:
+  data-volume:
     driver: local

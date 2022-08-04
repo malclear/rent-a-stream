@@ -9,7 +9,8 @@ export class UserMovies extends Component {
     }
     
     componentDidMount() {
-        this.loadUserMovies();
+        debugger;
+        this.fetchMovieData();
     }
 
     static renderUserMovies(rentedMovies, ownedMovies){
@@ -37,7 +38,6 @@ export class UserMovies extends Component {
                 </table>
             </div>
         );
-       
     }
     
     render() {
@@ -51,18 +51,30 @@ export class UserMovies extends Component {
             </div>
         );
     }
-    
-    async loadUserMovies() {
-        const response = await fetch('user/malcolm/movies');
-        const data = await response.json();
+
+    async fetchMovieData() {
         let ownedMovies = [];
         let rentedMovies = [];
-        data.forEach(movie => {
-            if(movie.isOwned) 
-                ownedMovies.push(movie);
-            else 
-                rentedMovies.push(movie);
+
+        if(window.$authenticated){
+            let userId = window.$userId;
+            debugger;
+            let response = await fetch(`user/${userId}/movies`);
+            let data = await response.json();
+            data.forEach(movie => {
+                if(movie.isOwned)
+                    ownedMovies.push(movie);
+                else
+                    rentedMovies.push(movie);
+            });
+        }
+
+        let moviesResponse = await fetch('movies');
+        let moviesData = await moviesResponse.json();
+        let movieCatalog = [];
+        moviesData.forEach(movie => {
+            movieCatalog.push(movie);
         });
-        this.setState( {rentedMovies: rentedMovies, ownedMovies: ownedMovies, loading: false}); 
+        this.setState( {movieCatalog: movieCatalog, rentedMovies: rentedMovies, ownedMovies: ownedMovies, loading: false});
     }
 }

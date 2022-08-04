@@ -15,10 +15,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="linq2db" Version="4.1.1" />
         <PackageReference Include="linq2db.AspNet" Version="4.1.1" />
-        <PackageReference Include="linq2db.PostgreSQL" Version="4.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Npgsql" Version="6.0.6" />
     </ItemGroup>
 
     <ItemGroup>
