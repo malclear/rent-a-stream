@@ -4,15 +4,17 @@ export class FetchData2 extends Component {
   static displayName = FetchData2.name;
 
   constructor(props) {
+    console.log('... in ctor(props)!!!');
     super(props);
-    this.state = { users: [], loading: true };
+    this.state = { user: {}, loading: true };
   }
 
   componentDidMount() {
     this.getUser(); 
   }
 
-  static renderUsersTable(users) {
+  static renderUsersTable(user) {
+      console.log(user);
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -22,12 +24,10 @@ export class FetchData2 extends Component {
          </tr>
         </thead>
         <tbody>
-          {users.map(user =>
-            <tr key={user.id}>
+            <tr key={user.userid}>
               <td>{user.username}</td>
-              <td>{user.total_due}</td>
+              <td>{user.totalDue}</td>
            </tr>
-          )}
         </tbody>
       </table>
     );
@@ -36,11 +36,12 @@ export class FetchData2 extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchData2.renderUsersTable(this.state.users);
+      : FetchData2.renderUsersTable(this.state.user);
 
+      console.log(this.state);
     return (
       <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
+        <h1 id="tabelLabel" >User list</h1>
         <p>This component demonstrates fetching data from the server.</p>
         {contents}
       </div>
@@ -48,8 +49,8 @@ export class FetchData2 extends Component {
   }
 
   async getUser() {
-    const response = await fetch('user/3ccd9aa0-8a83-41dd-a0c4-955e6f32f4cd');
+    const response = await fetch('user');
     const data = await response.json();
-    this.setState({ users: data, loading: false });
+    this.setState({ user: data, loading: false });
   }
 }

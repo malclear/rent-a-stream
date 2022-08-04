@@ -1,15 +1,15 @@
 using DataModel;
 
-namespace Akkatecture.Example.RentAStream.Web.Models;
+namespace Akkatecture.Example.RentAStream.Web.ViewModels;
 
 public class UserDemographics
 {
-    public Guid UserId { get; private set; }
+    public Guid Id { get; private set; }
     public string Username { get; private set; }
     public decimal TotalDue { get; private set; }
     public UserDemographics(User user)
     {
-        UserId = user.Id;
+        Id = user.Id;
         Username = user.Username;
         TotalDue = user.TotalDue;
     }

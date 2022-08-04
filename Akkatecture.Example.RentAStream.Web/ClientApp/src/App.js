@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import {Route, Redirect } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-
+import { UserMovies } from './components/UserMovies';
+import { Account } from './components/Account';
+import { Login } from './components/Login';
+// import { Admin } from './components/Admin';
+// import { FetchData2 } from './components/FetchData2';
 import './custom.css'
+
+window.$userId = '';
+window.$authenticated = false;
 
 export default class App extends Component {
   static displayName = App.name;
@@ -13,10 +17,25 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
+          <Route exact path="/" render={() => (<UserMovies />)}/>
+          <Route path='/account' render={() => (
+              isLoggedIn() ? (
+                  <Redirect to="/login"/>
+              ) : (
+                  <Account />
+              )
+          )}/>
+          <Route path='/login' render={() => (
+              <Login/>
+          )}/>
+        {/*<Route path='/fetch-data' component={FetchData2} />*/}
+        {/*<Route path='/admin' component={Admin} onEnter={requireAuth} />*/}
       </Layout>
     );
   }
+}
+
+function isLoggedIn() {
+    debugger;
+    return window.$authenticated;
 }

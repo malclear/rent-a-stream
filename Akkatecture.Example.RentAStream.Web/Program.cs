@@ -1,4 +1,3 @@
-using Akkatecture.Example.RentAStream.Web.Models;
 using DataModel;
 using LinqToDB;
 using LinqToDB.AspNet;
