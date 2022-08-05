@@ -40,7 +40,7 @@ export class NavMenu extends Component {
                       <NavLink tag={Link} className="text-dark" to="/admin" disabled={! window.$authenticated} hidden={! window.$authenticated} >Admin</NavLink>
                   </NavItem >
                   <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/login" disabled={! window.$authenticated} hidden={! window.$authenticated} >Logout</NavLink>
+                      <NavLink tag={Link} className="text-dark" to="/login" >{! window.$authenticated?'Log In':'Log Out'}</NavLink>
                   </NavItem>
               </ul>
             </Collapse>

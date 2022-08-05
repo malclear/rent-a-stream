@@ -8,6 +8,7 @@ export class Login extends Component {
     // }
     
     render() {
+        // debugger;
         window.$authenticated = false;
         window.$authenticated = '';
         return (<div>Hello Login!</div>);

@@ -6,14 +6,16 @@ export class UserMovies extends Component {
     constructor(props) {
         super(props);
         this.state = {rentedMovies: [], ownedMovies: [], loading: true};
+        window.$userId = 'asdfasdf';
+        window.$authenticated = 'asdfasdf2222';
     }
     
     componentDidMount() {
-        debugger;
         this.fetchMovieData();
     }
 
     static renderUserMovies(rentedMovies, ownedMovies){
+        // debugger;
         return (
             <div>
                 <h3>Rented Movies</h3>
@@ -59,7 +61,7 @@ export class UserMovies extends Component {
         if(window.$authenticated){
             let userId = window.$userId;
             debugger;
-            let response = await fetch(`user/${userId}/movies`);
+            let response = await fetch(`api/user/${userId}/movies`);
             let data = await response.json();
             data.forEach(movie => {
                 if(movie.isOwned)
@@ -69,12 +71,13 @@ export class UserMovies extends Component {
             });
         }
 
-        let moviesResponse = await fetch('movies');
-        let moviesData = await moviesResponse.json();
-        let movieCatalog = [];
-        moviesData.forEach(movie => {
-            movieCatalog.push(movie);
+        debugger;
+        let catalogResponse = await fetch('api/catalog');
+        let catalogData = await catalogResponse.json();
+        let catalog = [];
+        catalogData.forEach(movie => {
+            catalog.push(movie);
         });
-        this.setState( {movieCatalog: movieCatalog, rentedMovies: rentedMovies, ownedMovies: ownedMovies, loading: false});
+        this.setState( {movieCatalog: catalog, rentedMovies: rentedMovies, ownedMovies: ownedMovies, loading: false});
     }
 }

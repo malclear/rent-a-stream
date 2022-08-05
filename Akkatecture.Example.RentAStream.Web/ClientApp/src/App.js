@@ -36,6 +36,6 @@ export default class App extends Component {
 }
 
 function isLoggedIn() {
-    debugger;
+    // debugger;
     return window.$authenticated;
 }

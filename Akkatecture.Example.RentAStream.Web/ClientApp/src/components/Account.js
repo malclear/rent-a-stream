@@ -5,7 +5,7 @@ export class Account extends Component {
 
     constructor(props) {
         super(props);
-        debugger;
+        // debugger;
         this.state = { username: '', balance: 0, amountDue: 0, loading: true};
     }
     

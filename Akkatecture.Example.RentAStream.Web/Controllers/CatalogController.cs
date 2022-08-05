@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
 
-public class MoviesController: ControllerBase
+[ApiController]
+[Route("api/[controller]")]
+public class CatalogController: ControllerBase
 {
-    private readonly ILogger<UserController> _logger;
+    private readonly ILogger<CatalogController> _logger;
     private readonly RentastreamDb _connection;
 
-    public MoviesController(ILogger<UserController> logger, RentastreamDb connection)
+    public CatalogController(ILogger<CatalogController> logger, RentastreamDb connection)
     {
         _logger = logger;
         _connection = connection;
@@ -18,8 +20,8 @@ public class MoviesController: ControllerBase
     [HttpGet]
     public async Task<IEnumerable<MovieHeader>> Get()
     {
+        _logger.LogInformation("In CatalogController");
         return Enumerable.Range(1, 5).Select(index =>
             new MovieHeader(index));
     }
-
 }

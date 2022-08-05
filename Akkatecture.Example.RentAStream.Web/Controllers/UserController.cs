@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
@@ -42,21 +42,21 @@ public class UserController : ControllerBase
     }
     
     [HttpGet]
-    [Route("{controller}/{userId}/account")]
+    [Route("{userId}/account")]
     public async Task<UserAccount> GetUserAccount(string userId)
     {
         return new UserAccount();
     }
     
     [HttpGet]
-    [Route("{controller}/{userId}/payments")]
+    [Route("{userId}/payments")]
     public async Task<IEnumerable<UserPayment>> GetUserPayments(string userId)
     {
         return null;
     }
     
     [HttpPost]
-    [Route("{controller}/{userId}/payments")]
+    [Route("{userId}/payments")]
     public async Task<IEnumerable<UserPayment>> GetUserPayments(string userId, UserPayment payment)
     {
         return null;

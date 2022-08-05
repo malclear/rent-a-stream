@@ -48,7 +48,7 @@ export class FetchData2 extends Component {
   }
 
   async getUser() {
-    const response = await fetch('user');
+    const response = await fetch('api/User');
     const data = await response.json();
     this.setState({ user: data, loading: false });
   }
