@@ -17,7 +17,7 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-          <Route exact path="/" render={() => (<UserMovies />)}/>
+          <Route exact path="/" render={() => (< Movies />)}/>
           <Route path='/account' render={() => (
               isLoggedIn() ? (
                   <Redirect to="/login"/>

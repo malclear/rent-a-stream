@@ -6,8 +6,6 @@ export class UserMovies extends Component {
     constructor(props) {
         super(props);
         this.state = {rentedMovies: [], ownedMovies: [], loading: true};
-        window.$userId = 'asdfasdf';
-        window.$authenticated = 'asdfasdf2222';
     }
     
     componentDidMount() {
@@ -43,10 +41,13 @@ export class UserMovies extends Component {
     }
     
     render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : UserMovies.renderUserMovies(this.state.rentedMovies, this.state.ownedMovies);
-            
+        let contents = {};
+        if(window.$authenticated)
+            contents = this.state.loading
+                ? <p><em>Loading...</em></p>
+                : UserMovies.renderUserMovies(this.state.rentedMovies, this.state.ownedMovies); 
+        else 
+           contents = <p><em>Register or Login!</em></p>
         return (
             <div>
                 {contents}
