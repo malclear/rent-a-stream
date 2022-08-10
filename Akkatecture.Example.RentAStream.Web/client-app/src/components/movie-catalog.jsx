@@ -1,12 +1,17 @@
-import PropTypes from 'prop-types';
+import MovieAppContext from '../context/movie-app-context';
+import {useContext} from 'react';
+import MovieCard from './movie-card';
 
-MovieCatalog.propTypes = {
-    
-};
+function MovieCatalog() {
+    const {movieCatalog} = useContext(MovieAppContext);
 
-function MovieCatalog(props) {
-    return (
-        <div>Movie Catalog</div>
+    return (<>
+            <div className="sectionHeader">Movie Catalog:
+            </div>
+            {
+                movieCatalog.map((movie) => ( <div><MovieCard  key={movie.code} movie={movie} /></div> )) 
+            }
+        </>
     );
 }
 

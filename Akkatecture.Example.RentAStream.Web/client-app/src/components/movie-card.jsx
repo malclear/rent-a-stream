@@ -1,8 +1,12 @@
 
-function MovieCard(props) {
+function MovieCard({movie}) {
     return (
-        <div>MovieCard Component!!</div>
-    );
+        <div className='movieCard'>
+        {
+            movie.title 
+        }
+        </div>
+        );
 }
 
 export default MovieCard;

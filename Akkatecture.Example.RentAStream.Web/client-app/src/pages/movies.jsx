@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
-import MovieCatalog from "../components/movie-catalog";
+import MovieAppContext from "../context/movie-app-context"
 import UserMovies from "../components/user-movies";
+import {useContext} from 'react';
+import MovieCatalog from '../components/movie-catalog';
 
-Movies.propTypes = {
-    
-};
-
-function Movies(props) {
+function Movies() {
+    const {movieCatalog} = useContext(MovieAppContext); 
     return (
         <>
             <MovieCatalog/>

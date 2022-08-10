@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import MovieCard from "./movie-card";
-
-UserMovies.propTypes = {
-    
-};
+import MovieAppContext from '../context/movie-app-context';
+import {useContext} from 'react';
 
 function UserMovies(props) {
+    const {movieCatalog} = useContext(MovieAppContext);
+    
     return (
-    <MovieCard />);
+        <>
+            <div>User Movies:</div> 
+        </>
+    );
 }
 
 export default UserMovies;
