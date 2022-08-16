@@ -1,34 +1,71 @@
-import {createContext, useState} from 'react';
+import {createContext, useState, useEffect} from 'react';
 
 const MovieAppContext = createContext();
 
 export const MovieAppProvider = ({children}) => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [userMovies, setUserMovies] = useState([])
-    const [movieCatalog, setMovieCatalog] = useState(getMovies()) 
-    const [catalogEdit, setCatalogEdit] = useState({
-        item: {},
-        edit: false,
-    })
+    const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState({
+        isAuthenticated: false
+    });
+    const [userLicenses, setUserLicenses] = useState([]);
+    const [movieCatalog, setMovieCatalog] = useState([]);
+    const [journal, setJournal] = useState([]);
     
-    return <MovieAppContext.Provider 
+    useEffect(() => {
+        fetchCatalogMovies();
+    }, []);
+    
+    const fetchCatalogMovies = async () => {
+        const response = await fetch('https://localhost:7135/api/catalog');
+        const data = await response.json();
+        setMovieCatalog(data);
+    }
+    
+    const authenticateUser = async (username) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({"password":"ignoreThis"})};
+        const response = await fetch(`https://localhost:7135/api/user/${username}/login`, requestOptions);
+        const data = await response.json(); 
+        
+        if(!response.ok) 
+            return false;
+        setUser({isAuthenticated: true, ...data});
+        const movieData = await fetch(`https://localhost:7135/api/user/${data.id}/movies`)
+            .then(response => response.json());
+        setUserLicenses(movieData);            
+        
+        return true;
+    }
+    
+    const logOutUser = async () => {
+        setUser({
+            isAuthenticated: false
+        });
+        setUserLicenses([]);
+    }
+    
+    const getAccountData = async () => {
+        console.log('getting account data for userId: ' + user.userId);
+        return {
+            userId: user.userId
+        };
+    }
+
+    return <MovieAppContext.Provider
         value={{
             isLoading,
-            movieCatalog,         
-            userMovies
+            userLicenses,
+            movieCatalog,
+            user,
+            journal,
+            authenticateUser,
+            logOutUser,
+            getAccountData
         }}>
         {children}
     </MovieAppContext.Provider>;
-
-    function getMovies() {
-        return [
-            {code:"o_brother", title:"O' Brother Where Art Thou?"},
-            {code:"cars", title:"Cars"},
-            {code:"sling_blade", title:"Sling Blade"},
-            {code:"big_lebowski", title:"The Big Lebowski"},
-            {code:"apoc", title:"Apocalypse Now"}
-        ];
-    }
 }
 
 export default MovieAppContext;

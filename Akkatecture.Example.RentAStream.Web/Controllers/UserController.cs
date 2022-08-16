@@ -1,5 +1,6 @@
 using Akkatecture.Example.RentAStream.Web.ViewModels;
 using DataModel;
+using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
@@ -18,27 +19,63 @@ public class UserController : ControllerBase
     }
    
     [HttpGet]
-    public UserDemographics Get()
+    [Route("{userId}")]
+    public ActionResult<UserDemographics> Get(Guid userId)
     {
-        // var id = Guid.Parse(userId);
-        var id = Guid.Parse("3ccd9aa0-8a83-41dd-a0c4-955e6f32f4cd");
-        // var userDemographics = await from p in _connection.Users where p.Id == id select new UserDemographics(p);
-        var user = _connection.Users.Where(p => p.Id == id).SingleOrDefault();
-        return new UserDemographics(user);
+        var user = _connection.Projections.Users.SingleOrDefault(p => p.Id == userId);
+        if (user == null)
+            return NotFound();
+        
+        return new OkObjectResult( new UserDemographics
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Username = user.Username
+        });
     }
-
+    
     [HttpPost]
+    [Route("{username}/login")]
+    public async Task<ActionResult<UserDemographics>> Post(string username)
+    {
+        // Ignore the password because we're not doing security here.
+        var user = _connection.Projections.Users.SingleOrDefault(p => p.Username == username);
+        
+        if (user == null) return NotFound();
+        
+        var demographics = new UserDemographics
+        {
+            Id = user.Id, 
+            Name = user.Name, 
+            Username = user.Username 
+        };
+        return new OkObjectResult(demographics);
+    }
+    
+    [HttpPost]
+    [Route("{userId}")]
     public async Task<ActionResult<UserDemographics>> Post(UserDemographics user)
     {
         throw new NotImplementedException();
     }
-
+    
     [HttpGet]
     [Route("{userId}/movies")]
-    public async Task<IEnumerable<MovieHeader>> GetAllMovies(string userId)
+    public async Task<IEnumerable<MovieLicense>> GetAllMoviesForUser(Guid userId)
     {
-        return Enumerable.Range(1, 5).Select(index =>
-            new MovieHeader(index));
+        var query = from userMovie in _connection.Projections.UserMovies
+            join movie in _connection.Config.CatalogListings on userMovie.MovieCode equals movie.MovieCode
+            where userMovie.UserId == userId
+            select new
+            {
+                movie.MovieCode,
+                movie.MovieTitle,
+                userMovie.LicenseType
+            }; 
+        
+        var userMovies = (await query.ToListAsync()).Select(um =>
+            new MovieLicense {Code = um.MovieCode, Title = um.MovieTitle, LicenseType = um.LicenseType}).ToList();
+        return userMovies;
     }
     
     [HttpGet]

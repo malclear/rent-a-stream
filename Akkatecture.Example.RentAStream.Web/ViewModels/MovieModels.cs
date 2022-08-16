@@ -2,17 +2,22 @@ namespace Akkatecture.Example.RentAStream.Web.ViewModels;
 
 public class MovieHeader
 {
-    public MovieHeader(int num)
+    public MovieHeader()
     {
-        Name = $"foo_{num}";
-        Id = num;
-        IsOwned = num % 2 == 0;
     }
 
-    public int Id { get; private set; }
-    public string Name { get; private set; }
-    public bool IsOwned { get; private set; }
+    // public MovieHeader(string code, string title)
+    // {
+    //     //TODO Get rid of this; make it simpler
+    //     Code = code;
+    //     Title = title;
+    // }
+
+    public string Code { get; set; }
+    public string Title { get; set; }
 }
 
-
-public class MovieDetails { }
+public class MovieLicense : MovieHeader
+{
+    public string LicenseType{ get; set; }
+}

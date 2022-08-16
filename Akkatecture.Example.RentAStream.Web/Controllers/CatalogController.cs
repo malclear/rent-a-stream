@@ -1,5 +1,6 @@
 using Akkatecture.Example.RentAStream.Web.ViewModels;
 using DataModel;
+using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
@@ -21,7 +22,10 @@ public class CatalogController: ControllerBase
     public async Task<IEnumerable<MovieHeader>> Get()
     {
         _logger.LogInformation("In CatalogController");
-        return Enumerable.Range(1, 5).Select(index =>
-            new MovieHeader(index));
+        var query = from catalog in _connection.Config.CatalogListings
+            select new MovieHeader{ Code = catalog.MovieCode, Title = catalog.MovieTitle };
+        
+        var movies = await query.ToListAsync();
+        return movies;
     }
 }

@@ -4,6 +4,15 @@ using LinqToDB.AspNet.Logging;
 using LinqToDB.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name:"foo",builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddLinqToDBContext<RentastreamDb>((provider, options) =>
@@ -20,6 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors("foo");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

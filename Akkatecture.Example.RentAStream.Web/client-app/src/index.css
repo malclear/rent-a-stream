@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.movie-card {
+    
+}
+
+.section-header {
+    font-weight: bold;
+}
+
+.movie-group-section {
+    padding-bottom: 20px;
+}

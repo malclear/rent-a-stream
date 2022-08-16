@@ -5,13 +5,8 @@
 // </auto-generated>
 // ---------------------------------------------------------------------------------------------------
 
-using LinqToDB;
 using LinqToDB.Configuration;
 using LinqToDB.Data;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 #pragma warning disable 1573, 1591
 #nullable enable
@@ -20,40 +15,37 @@ namespace DataModel
 {
 	public partial class RentastreamDb : DataConnection
 	{
+		#region Schemas
+		public void InitSchemas()
+		{
+			Projections = new ProjectionsSchema.DataContext(this);
+			Config = new ConfigSchema.DataContext(this);
+		}
+
+		public ProjectionsSchema.DataContext Projections { get; set; } = null!;
+		public ConfigSchema.DataContext      Config      { get; set; } = null!;
+		#endregion
+
 		public RentastreamDb()
 		{
+			InitSchemas();
 			InitDataContext();
 		}
 
 		public RentastreamDb(string configuration)
 			: base(configuration)
 		{
+			InitSchemas();
 			InitDataContext();
 		}
 
 		public RentastreamDb(LinqToDBConnectionOptions<RentastreamDb> options)
 			: base(options)
 		{
+			InitSchemas();
 			InitDataContext();
 		}
 
 		partial void InitDataContext();
-
-		public ITable<User> Users => this.GetTable<User>();
-	}
-
-	public static partial class ExtensionMethods
-	{
-		#region Table Extensions
-		public static User? Find(this ITable<User> table, Guid id)
-		{
-			return table.FirstOrDefault(e => e.Id == id);
-		}
-
-		public static Task<User?> FindAsync(this ITable<User> table, Guid id, CancellationToken cancellationToken = default)
-		{
-			return table.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-		}
-		#endregion
 	}
 }

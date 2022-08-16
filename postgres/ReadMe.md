@@ -2,7 +2,7 @@
 To generate the model of the database, use the command:
 
 > dotnet linq2db scaffold -p PostgreSQL -c "Server=localhost;Port=5432;Database=rentastream;User Id=ras_user;Password=ras_password;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Lifetime=0;"
- 
+
 ### Application Description
 
 [[akkatecture]]

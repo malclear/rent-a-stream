@@ -1,7 +1,7 @@
 
 function MovieCard({movie}) {
     return (
-        <div className='movieCard'>
+        <div key={ movie.code } className='movie-card'>
         {
             movie.title 
         }
