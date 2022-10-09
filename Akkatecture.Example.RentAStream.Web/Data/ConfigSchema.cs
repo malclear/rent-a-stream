@@ -45,8 +45,10 @@ namespace DataModel
 		[Table("catalog_listing", Schema = "config")]
 		public class CatalogListing
 		{
-			[Column("movie_code" , CanBeNull = false, IsPrimaryKey = true)] public string MovieCode  { get; set; } = null!; // character varying
-			[Column("movie_title", CanBeNull = false                     )] public string MovieTitle { get; set; } = null!; // character varying
+			[Column("movie_code"       , CanBeNull = false, IsPrimaryKey = true)] public string  MovieCode        { get; set; } = null!; // character varying
+			[Column("movie_title"      , CanBeNull = false                     )] public string  MovieTitle       { get; set; } = null!; // character varying
+			[Column("poster_image"                                             )] public string? PosterImage      { get; set; } // character varying
+			[Column("short_description"                                        )] public string? ShortDescription { get; set; } // character varying
 		}
 	}
 }

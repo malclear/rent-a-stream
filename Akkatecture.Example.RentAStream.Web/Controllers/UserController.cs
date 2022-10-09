@@ -63,6 +63,8 @@ public class UserController : ControllerBase
     [Route("{userId}/movies")]
     public async Task<IEnumerable<MovieLicense>> GetAllMoviesForUser(Guid userId)
     {
+        // TODO Move this to a service
+        
         var query = from userMovie in _connection.Projections.UserMovies
             join movie in _connection.Config.CatalogListings on userMovie.MovieCode equals movie.MovieCode
             where userMovie.UserId == userId
@@ -70,14 +72,38 @@ public class UserController : ControllerBase
             {
                 movie.MovieCode,
                 movie.MovieTitle,
-                userMovie.LicenseType
+                movie.PosterImage,
+                movie.ShortDescription,
+                userMovie.LicenseType,
+                userMovie.ValidUntil
             }; 
         
-        var userMovies = (await query.ToListAsync()).Select(um =>
-            new MovieLicense {Code = um.MovieCode, Title = um.MovieTitle, LicenseType = um.LicenseType}).ToList();
+        // var userMovies = (await query.ToListAsync()).Select(um => new MovieLicense
+        //     {
+        //         Code = um.MovieCode,
+        //         Title = um.MovieTitle,
+        //         ShortDescription = um.ShortDescription,
+        //         PosterImage = um.PosterImage,
+        //         LicenseType = um.LicenseType,
+        //         ValidUntil = um.ValidUntil?.DateTime
+        //     })
+        //     .ToList();
+        
+            
+          var userMovies =  (await query.ToListAsync()).Select(um => new MovieLicense
+            {
+                Code = um.MovieCode,
+                Title = um.MovieTitle,
+                ShortDescription = um.ShortDescription,
+                PosterImage = um.PosterImage,
+                LicenseType = um.LicenseType,
+                ValidUntil = um.ValidUntil?.DateTime
+            })
+            .ToList();        
+        
         return userMovies;
     }
-    
+
     [HttpGet]
     [Route("{userId}/account")]
     public async Task<UserAccount> GetUserAccount(string userId)

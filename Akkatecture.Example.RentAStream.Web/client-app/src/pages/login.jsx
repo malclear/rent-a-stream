@@ -35,7 +35,7 @@ function Login() {
     }
 
     return (
-        <><div>Login</div>
+        <><div className="section-header">Login</div>
             <form onSubmit={handleLogin}>
                 <div>
                     <div className='input-group'>

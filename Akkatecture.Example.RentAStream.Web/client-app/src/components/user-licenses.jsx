@@ -2,6 +2,7 @@ import MovieCard from "./movie-card";
 import MovieAppContext from '../context/movie-app-context';
 import { Link } from 'react-router-dom';
 import {useContext} from 'react';
+import MovieLicenseCard from './movie-license-card';
 
 function UserLicenses() {
     const {userLicenses, user} = useContext(MovieAppContext);
@@ -15,15 +16,18 @@ function UserLicenses() {
     else {
         return (
             <div className="movie-group-section">
-                <div className="section-header">User Movies:</div>
+                <h3 className="section-header">YOUR MOVIES:</h3>
                 {
-                    userLicenses.map((movie) => (
-                        <div className='movie-card'>
-                            <MovieCard key={movie.code} movie={movie}/>
-                        </div>))
+                    userLicenses.map((movie) => {
+                        return (
+                                <MovieLicenseCard className="movie-card"  key={movie.code} 
+                                           movie={movie} />
+                        )
+                    })
                 }
             </div>
         );
     }
 }
+
 export default UserLicenses;

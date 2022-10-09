@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+.movie-title-license {
+    width: 500px;
+    display: inline;
+    border:1px solid black;
+}
+
+.movie-title {
+    width: 500px;
+    display: inline;
+    border:1px solid black;
+    margin-right: 20px;
+}
+
+.movie-license {
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    height:50px;
+}
+
+.movie-license-card {
+    display: inline-block;
+    border: 10px solid lightgray;
+    width: 225px;
+    margin: 5px;
+    padding: 10px;
+    height:500px;
+}
+
+.movie-card {
+    display: inline-block;
+    border: 10px solid lightgray;
+    width: 225px;
+    margin: 5px;
+    padding: 10px;
+}
+
+div.card div.card-title {
+    height: 50px;    
+    font-size: medium;
+    font-weight: bolder;
+    padding: 10px;
+    text-decoration: underline;
+    text-align: center;
+}
+
+div.card div.card-body {
+    height: 100px;
+    font-size: smaller;
+}
+
+span.movie-card div.card div.card-image {
+   align-content: center;
+}
+.card-img {
+    width: 175px;
+    height: 250px;
+}

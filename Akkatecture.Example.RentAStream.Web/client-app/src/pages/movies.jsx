@@ -1,5 +1,5 @@
 import MovieAppContext from "../context/movie-app-context"
-import UserMovies from "../components/user-movies";
+import UserMovies from "../components/user-licenses";
 import {useContext} from 'react';
 import MovieCatalog from '../components/movie-catalog';
 

@@ -12,14 +12,13 @@ code {
     monospace;
 }
 
-.movie-card {
-    
-}
-
 .section-header {
     font-weight: bold;
+    font-size:medium;
+    padding-bottom: 20px;
 }
 
 .movie-group-section {
     padding-bottom: 20px;
+    padding-top: 20px;
 }

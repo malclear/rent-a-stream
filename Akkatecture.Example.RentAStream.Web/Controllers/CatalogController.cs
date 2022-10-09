@@ -23,7 +23,14 @@ public class CatalogController: ControllerBase
     {
         _logger.LogInformation("In CatalogController");
         var query = from catalog in _connection.Config.CatalogListings
-            select new MovieHeader{ Code = catalog.MovieCode, Title = catalog.MovieTitle };
+            orderby catalog.MovieTitle
+            select new MovieHeader
+            {
+                Code = catalog.MovieCode,
+                Title = catalog.MovieTitle,
+                PosterImage = catalog.PosterImage,
+                ShortDescription = catalog.ShortDescription
+            };
         
         var movies = await query.ToListAsync();
         return movies;

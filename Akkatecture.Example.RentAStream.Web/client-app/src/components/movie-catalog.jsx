@@ -6,9 +6,9 @@ function MovieCatalog() {
     const {movieCatalog} = useContext(MovieAppContext);
 
     return (<>
-            <div className="section-header">Movie Catalog: </div>
+            <h3 className="section-header">CHOOSE A MOVIE! </h3>
             {
-                movieCatalog.map( (movie) => ( <MovieCard  key={movie.code} movie={movie} />)) 
+                movieCatalog.map( (movie) => ( <MovieCard className="movie-card"  key={movie.code} movie={movie} />)) 
             }
         </>
     );
