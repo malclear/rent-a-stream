@@ -25,7 +25,7 @@ namespace DataModel
 
 			public ITable<Account>      Accounts      => _dataContext.GetTable<Account>();
 			public ITable<UserMovie>    UserMovies    => _dataContext.GetTable<UserMovie>();
-			public ITable<User>         Users         => _dataContext.GetTable<User>();
+			public ITable<AppUser>         Users         => _dataContext.GetTable<AppUser>();
 			public ITable<UserPurchase> UserPurchases => _dataContext.GetTable<UserPurchase>();
 
 			public DataContext(IDataContext dataContext)
@@ -55,12 +55,12 @@ namespace DataModel
 			return table.FirstOrDefaultAsync(e => e.UserId == userId && e.MovieCode == movieCode, cancellationToken);
 		}
 
-		public static User? Find(this ITable<User> table, Guid id)
+		public static AppUser? Find(this ITable<AppUser> table, Guid id)
 		{
 			return table.FirstOrDefault(e => e.Id == id);
 		}
 
-		public static Task<User?> FindAsync(this ITable<User> table, Guid id, CancellationToken cancellationToken = default)
+		public static Task<AppUser?> FindAsync(this ITable<AppUser> table, Guid id, CancellationToken cancellationToken = default)
 		{
 			return table.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 		}
@@ -93,7 +93,7 @@ namespace DataModel
 		}
 
 		[Table("user", Schema = "projections")]
-		public class User
+		public class AppUser
 		{
 			[Column("id"      , IsPrimaryKey = true )] public Guid   Id       { get; set; } // uuid
 			[Column("name"    , CanBeNull    = false)] public string Name     { get; set; } = null!; // character varying

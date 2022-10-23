@@ -34,7 +34,6 @@ export const MovieAppProvider = ({children}) => {
         setUser({isAuthenticated: true, ...data});
         const licenseData = await fetch(`https://localhost:7135/api/user/${data.id}/movies`)
             .then(response => response.json());
-        console.log('*********************************************************************');
         setUserLicenses(licenseData);            
         
         return true;

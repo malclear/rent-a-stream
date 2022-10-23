@@ -77,20 +77,8 @@ public class UserController : ControllerBase
                 userMovie.LicenseType,
                 userMovie.ValidUntil
             }; 
-        
-        // var userMovies = (await query.ToListAsync()).Select(um => new MovieLicense
-        //     {
-        //         Code = um.MovieCode,
-        //         Title = um.MovieTitle,
-        //         ShortDescription = um.ShortDescription,
-        //         PosterImage = um.PosterImage,
-        //         LicenseType = um.LicenseType,
-        //         ValidUntil = um.ValidUntil?.DateTime
-        //     })
-        //     .ToList();
-        
-            
-          var userMovies =  (await query.ToListAsync()).Select(um => new MovieLicense
+           
+        var userMovies =  (await query.ToListAsync()).Select(um => new MovieLicense
             {
                 Code = um.MovieCode,
                 Title = um.MovieTitle,
@@ -108,6 +96,9 @@ public class UserController : ControllerBase
     [Route("{userId}/account")]
     public async Task<UserAccount> GetUserAccount(string userId)
     {
+        // var query = from account in _connection.Projections.Accounts join user in U  
+        //     where sdf.Id == Guid.Parse(userId)
+        //     select sdf.Balance;
         return new UserAccount();
     }
     
@@ -120,8 +111,9 @@ public class UserController : ControllerBase
     
     [HttpPost]
     [Route("{userId}/payments")]
-    public async Task<IEnumerable<UserPayment>> GetUserPayments(string userId, UserPayment payment)
+    public async Task<IEnumerable<UserPayment>> AddUserPayment(string userId, [FromForm] UserPayment payment)
     {
+        
         return null;
     }
 }
