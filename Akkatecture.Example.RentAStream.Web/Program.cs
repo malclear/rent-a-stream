@@ -6,7 +6,7 @@ using LinqToDB.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(opt =>
 {
-    opt.AddPolicy(name:"foo",builder =>
+    opt.AddPolicy(name:"devOnlyPolicy",builder =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyHeader()
@@ -29,7 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseCors("foo");
+app.UseCors("devOnlyPolicy");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

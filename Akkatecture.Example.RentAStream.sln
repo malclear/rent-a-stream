@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akkatecture.Example.RentAStream.Web", "Akkatecture.Example.RentAStream.Web\Akkatecture.Example.RentAStream.Web.csproj", "{83373457-A672-43B0-9115-D239DEEC7CA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rentastream.Domain", "Rentastream.Domain\Rentastream.Domain.csproj", "{7567C638-C757-4B01-BE61-3524DDEEE0EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{83373457-A672-43B0-9115-D239DEEC7CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83373457-A672-43B0-9115-D239DEEC7CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83373457-A672-43B0-9115-D239DEEC7CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7567C638-C757-4B01-BE61-3524DDEEE0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7567C638-C757-4B01-BE61-3524DDEEE0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7567C638-C757-4B01-BE61-3524DDEEE0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7567C638-C757-4B01-BE61-3524DDEEE0EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
