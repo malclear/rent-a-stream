@@ -1,7 +1,12 @@
+using Akka.Actor;
+using Akka.Hosting;
+using Akkatecture.Aggregates.ExecutionResults;
+using Akkatecture.Commands;
 using Akkatecture.Example.RentAStream.Web.ViewModels;
 using DataModel;
 using LinqToDB;
 using Microsoft.AspNetCore.Mvc;
+using Rentastream.Domain.Aggregates.Account;
 
 namespace Akkatecture.Example.RentAStream.Web.Controllers;
 
@@ -11,11 +16,13 @@ public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     private readonly RentastreamDb _connection;
+    private readonly IActorRef _accountManager;
 
-    public UserController(ILogger<UserController> logger, RentastreamDb connection)
+    public UserController(ILogger<UserController> logger, RentastreamDb connection, ActorRegistry registry)
     {
         _logger = logger;
         _connection = connection;
+        _accountManager = registry.Get<AccountManager>();
     }
    
     [HttpGet]
@@ -56,7 +63,9 @@ public class UserController : ControllerBase
     [Route("{userId}")]
     public async Task<ActionResult<UserDemographics>> Post(UserDemographics user)
     {
-        throw new NotImplementedException();
+        var createCommand = new CreateAccount(AccountId.New, CommandId.New, user.Username, user.Name);
+        var result = _accountManager.Ask(createCommand);
+        return Created("/user/", createCommand.AggregateId.GetGuid());
     }
     
     [HttpGet]

@@ -1,7 +1,10 @@
+using Akka.Actor;
 using DataModel;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
 using LinqToDB.Configuration;
+using Akka.Hosting;
+using Rentastream.Domain.Aggregates.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(opt =>
@@ -19,6 +22,15 @@ builder.Services.AddLinqToDBContext<RentastreamDb>((provider, options) =>
 {
     options.UsePostgreSQL(builder.Configuration.GetConnectionString("Default"))
         .UseDefaultLogging(provider);
+});
+
+builder.Services.AddAkka("rent-a-stream", cb =>
+{
+    cb.WithActors((system, registry) =>
+    {
+        var accountManager = system.ActorOf(Props.Create(() => new AccountManager()));
+        registry.TryRegister<AccountManager>(accountManager); // register for DI
+    });
 });
 
 var app = builder.Build();

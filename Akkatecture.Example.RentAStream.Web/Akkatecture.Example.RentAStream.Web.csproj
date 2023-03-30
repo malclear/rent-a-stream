@@ -15,6 +15,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Akka.Hosting" Version="1.5.1" />
         <PackageReference Include="linq2db" Version="4.1.1" />
         <PackageReference Include="linq2db.AspNet" Version="4.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.2" />
@@ -32,6 +33,10 @@
 
     <ItemGroup>
       <Folder Include="Data" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Rentastream.Domain\Rentastream.Domain.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
