@@ -39,6 +39,7 @@ export const MovieAppProvider = ({children}) => {
         return true;
     }
     
+    
     const logOutUser = async () => {
         setUser({
             isAuthenticated: false
